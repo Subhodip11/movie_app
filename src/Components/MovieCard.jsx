@@ -3,7 +3,7 @@ import React,{useEffect} from 'react'
 const MovieCard = (props) => {
     
     const getFullInfoById=async ()=>{
-        const url=`https://www.omdbapi.com/?apikey=c1b97b66&i=${props.imdbID}`;
+        const url=`https://www.omdbapi.com/?apikey=${props.apiKey}&i=${props.imdbID}`;
         let data=await fetch(url);
         let response=await data.json();
         console.log(response)

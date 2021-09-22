@@ -5,12 +5,20 @@ const MovieSection = (props) => {
      const [MovieInfo, setMovieInfo] = useState([]);
      
      const apiCall=async ()=>{
-         const url=props.type==='movies'?`https://www.omdbapi.com/?apikey=c1b97b66&s=${props.searchedValue}`:`https://www.omdbapi.com/?apikey=c1b97b66&type=${props.type}&s=${props.searchedValue}`
+         props.showProgress(true);
+         props.progress(10);
+         const url=props.type==='movies'?`https://www.omdbapi.com/?apikey=${props.apiKey}&s=${props.searchedValue}`:`https://www.omdbapi.com/?apikey=c1b97b66&type=${props.type}&s=${props.searchedValue}`
+         props.progress(30);
          let data=await fetch(url);
+         props.progress(50);
          let response=await data.json();
          let movieData=response['Search']
          console.log(movieData,url);
          setMovieInfo(movieData);
+         props.progress(100);
+         setTimeout(() => {
+             props.showProgress(false)
+         }, 2000);
      }
     
      useEffect(() => {
@@ -21,7 +29,7 @@ const MovieSection = (props) => {
         <div className='row'>
            {MovieInfo?MovieInfo.map((element,index)=>{
                return <div className="col-md-4" key={index}> 
-               <MovieCard  Title={element.Title} Year={element.Year} Poster={element.Poster} imdbID={element.imdbID} fullDetails={props.fullDetails} setfullDetails={props.setfullDetails} type={props.type}/>
+               <MovieCard apiKey={props.apiKey}  Title={element.Title} Year={element.Year} Poster={element.Poster} imdbID={element.imdbID} fullDetails={props.fullDetails} setfullDetails={props.setfullDetails} type={props.type}/>
                </div>
            }):(props.searchedValue.length===0?<h4>Searched {props.type} are displayed here</h4>:<h4>No match Found</h4>)}   
         </div>
