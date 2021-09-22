@@ -3,6 +3,12 @@ import MovieCard from './MovieCard';
 
 const MovieSection = (props) => {
      const [MovieInfo, setMovieInfo] = useState([]);
+     if(props.type==='movies')
+     document.title=`Movies Section- MFUD`
+     if(props.type==='series')
+     document.title=`Series Section- MFUD`
+     if(props.type==='episodes')
+     document.title=`Episodes Section- MFUD`
      
      const apiCall=async ()=>{
          props.showProgress(true);
@@ -29,7 +35,7 @@ const MovieSection = (props) => {
         <div className='row'>
            {MovieInfo?MovieInfo.map((element,index)=>{
                return <div className="col-md-4" key={index}> 
-               <MovieCard apiKey={props.apiKey}  Title={element.Title} Year={element.Year} Poster={element.Poster} imdbID={element.imdbID} fullDetails={props.fullDetails} setfullDetails={props.setfullDetails} type={props.type}/>
+               <MovieCard   Title={element.Title} Year={element.Year} Poster={element.Poster} imdbID={element.imdbID} fullDetails={props.fullDetails} setfullDetails={props.setfullDetails} type={props.type}/>
                </div>
            }):(props.searchedValue.length===0?<h4>Searched {props.type} are displayed here</h4>:<h4>No match Found</h4>)}   
         </div>
